@@ -88,12 +88,12 @@ func GetAllCatchphrases(c *fiber.Ctx) error {
 }
 
 func GetCatchphrase(c *fiber.Ctx) error {
-	catchphraseCollection := config.MI.DB.Collection("catchphrases")
+
+	catchphraseCollection := config.MI.DB.Collection("adbucket")
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 
 	var catchphrase models.Catchphrase
-	objId, err := primitive.ObjectIDFromHex(c.Params("id"))
-	findResult := catchphraseCollection.FindOne(ctx, bson.M{"_id": objId})
+	findResult := catchphraseCollection.FindOne(ctx, bson.M{"deviceID": c.Params("id")})
 	if err := findResult.Err(); err != nil {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
 			"success": false,
@@ -102,7 +102,7 @@ func GetCatchphrase(c *fiber.Ctx) error {
 		})
 	}
 
-	err = findResult.Decode(&catchphrase)
+	var err = findResult.Decode(&catchphrase)
 	if err != nil {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
 			"success": false,
