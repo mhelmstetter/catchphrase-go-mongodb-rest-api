@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/mikefmeyer/catchphrase-go-mongodb-rest-api/config"
-	"github.com/mikefmeyer/catchphrase-go-mongodb-rest-api/models"
+	"github.com/mhelmstetter/catchphrase-go-mongodb-rest-api/config"
+	"github.com/mhelmstetter/catchphrase-go-mongodb-rest-api/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"

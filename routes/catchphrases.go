@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/mikefmeyer/catchphrase-go-mongodb-rest-api/controllers" // replace
+	"github.com/mhelmstetter/catchphrase-go-mongodb-rest-api/controllers" // replace
 )
 
 func CatchphrasesRoute(route fiber.Router) {

@@ -1,4 +1,4 @@
-module github.com/mikefmeyer/catchphrase-go-mongodb-rest-api
+module github.com/mhelmstetter/catchphrase-go-mongodb-rest-api
 
 go 1.15
 

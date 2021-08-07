@@ -8,8 +8,8 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/joho/godotenv"
-	"github.com/mikefmeyer/catchphrase-go-mongodb-rest-api/config"
-	"github.com/mikefmeyer/catchphrase-go-mongodb-rest-api/routes"
+	"github.com/mhelmstetter/catchphrase-go-mongodb-rest-api/config"
+	"github.com/mhelmstetter/catchphrase-go-mongodb-rest-api/routes"
 )
 
 func setupRoutes(app *fiber.App) {
