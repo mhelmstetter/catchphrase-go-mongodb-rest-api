@@ -27,6 +27,11 @@ func setupRoutes(app *fiber.App) {
 }
 
 func main() {
+
+	// mux := http.NewServeMux()
+	// mux.HandleFunc("/custom_debug_path/profile", pprof.Profile)
+	// log.Fatal(http.ListenAndServe(":7777", mux))
+
 	if os.Getenv("APP_ENV") != "production" {
 		err := godotenv.Load()
 		if err != nil {
