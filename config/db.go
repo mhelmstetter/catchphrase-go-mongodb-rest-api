@@ -8,9 +8,14 @@ import (
 	"time"
 
 	"github.com/joho/godotenv"
+	"go.mongodb.org/mongo-driver/event"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
+)
+
+var (
+	InfoLogger *log.Logger
 )
 
 type MongoInstance struct {
@@ -20,6 +25,14 @@ type MongoInstance struct {
 
 var MI MongoInstance
 
+func HandlePoolMonitor(evt *event.PoolEvent) {
+	switch evt.Type {
+	case event.PoolClosedEvent, event.PoolCleared:
+		log.Println(evt)
+	}
+
+}
+
 func ConnectDB() {
 	if os.Getenv("APP_ENV") != "production" {
 		err := godotenv.Load()
@@ -28,12 +41,25 @@ func ConnectDB() {
 		}
 	}
 
-	client, err := mongo.NewClient(options.Client().ApplyURI(os.Getenv("MONGO_URI")))
+	//client, err := mongo.NewClient(options.Client().ApplyURI(os.Getenv("MONGO_URI")))
+
+	monitor := &event.PoolMonitor{
+		Event: HandlePoolMonitor,
+	}
+
+	client, err := mongo.NewClient(
+		options.Client().
+			ApplyURI(os.Getenv("MONGO_URI")).
+			//SetMinPoolSize( /*min pool size*/ ).
+			//SetMaxPoolSize( /*max pool size*/ ).
+			//SetHeartbeatInterval( /* some duration*/ ).
+			SetPoolMonitor(monitor))
+
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	err = client.Connect(ctx)
