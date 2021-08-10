@@ -35,21 +35,29 @@ func main() {
 		}
 	}
 
-	print("here")
 	app := fiber.New()
 
 	app.Use(cors.New())
-	app.Use(logger.New())
+
+	file, err := os.OpenFile("./access.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatalf("error opening file: %v", err)
+	}
+	defer file.Close()
+
+	app.Use(logger.New(logger.Config{
+		Output: file,
+	}))
 
 	config.ConnectDB()
 
 	setupRoutes(app)
 
 	port := os.Getenv("PORT")
-	err := app.Listen(":" + port)
+	app.Listen(":" + port)
 
-	if err != nil {
-		log.Fatal("Error app failed to start")
-		panic(err)
-	}
+	// if err != nil {
+	// 	log.Fatal("Error app failed to start")
+	// 	panic(err)
+	// }
 }
