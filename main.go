@@ -53,10 +53,10 @@ func main() {
 	setupRoutes(app)
 
 	port := os.Getenv("PORT")
-	app.Listen(":" + port)
+	err := app.Listen(":" + port)
 
-	// if err != nil {
-	// 	log.Fatal("Error app failed to start")
-	// 	panic(err)
-	// }
+	if err != nil {
+		log.Fatal("Error app failed to start")
+		panic(err)
+	}
 }
