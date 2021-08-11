@@ -6,7 +6,6 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/joho/godotenv"
 	"github.com/mhelmstetter/catchphrase-go-mongodb-rest-api/config"
 	"github.com/mhelmstetter/catchphrase-go-mongodb-rest-api/routes"
@@ -39,15 +38,15 @@ func main() {
 
 	app.Use(cors.New())
 
-	file, err := os.OpenFile("./access.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	if err != nil {
-		log.Fatalf("error opening file: %v", err)
-	}
-	defer file.Close()
+	// file, err := os.OpenFile("./access.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	// if err != nil {
+	// 	log.Fatalf("error opening file: %v", err)
+	// }
+	// defer file.Close()
 
-	app.Use(logger.New(logger.Config{
-		Output: file,
-	}))
+	// app.Use(logger.New(logger.Config{
+	// 	Output: file,
+	// }))
 
 	config.ConnectDB()
 
