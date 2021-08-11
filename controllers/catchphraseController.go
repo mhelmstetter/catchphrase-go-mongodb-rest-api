@@ -90,7 +90,7 @@ func GetAllCatchphrases(c *fiber.Ctx) error {
 func GetCatchphrase(c *fiber.Ctx) error {
 
 	catchphraseCollection := config.MI.DB.Collection("adbucket")
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, _ := context.WithTimeout(context.Background(), 100*time.Millisecond)
 
 	var catchphrase models.Catchphrase
 	findResult := catchphraseCollection.FindOne(ctx, bson.M{"deviceID": c.Params("id")})
