@@ -50,16 +50,14 @@ func ConnectDB() {
 	client, err := mongo.NewClient(
 		options.Client().
 			ApplyURI(os.Getenv("MONGO_URI")).
-			//SetMinPoolSize( /*min pool size*/ ).
-			//SetMaxPoolSize( /*max pool size*/ ).
-			//SetHeartbeatInterval( /* some duration*/ ).
+			SetConnectTimeout(3 * time.Second).
 			SetPoolMonitor(monitor))
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	err = client.Connect(ctx)
